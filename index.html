@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QR Beam · Send</title>
+  <meta name="description" content="Send a file or text from this screen to a phone camera with animated QR codes. Nothing is uploaded.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%231f56d6'/%3E%3Cpath d='M5 5h5v5H5zM14 5h5v5h-5zM5 14h5v5H5zM14 14h2v2h-2zM17 17h2v2h-2zM14 17h2v2h-2zM17 14h2v2h-2z' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="var(--accent)"/><path d="M5 5h5v5H5zM14 5h5v5h-5zM5 14h5v5H5zM14 14h2v2h-2zM17 17h2v2h-2zM14 17h2v2h-2zM17 14h2v2h-2z" fill="#fff"/></svg>
+      QR Beam
+    </a>
+    <nav>
+      <a href="./" aria-current="page">Send</a>
+      <a href="receive.html">Receive</a>
+    </nav>
+  </header>
+
+  <main class="send-layout">
+    <section class="panel">
+      <h1>Send to your phone</h1>
+      <p class="lead">Text or a file becomes an animated QR code. The phone reads it with its camera. Nothing is uploaded.</p>
+
+      <div class="tabs" role="tablist">
+        <button type="button" role="tab" data-tab="text" aria-selected="true">Text</button>
+        <button type="button" role="tab" data-tab="file" aria-selected="false">File</button>
+      </div>
+
+      <div id="tab-text">
+        <textarea id="text-input" placeholder="Paste or type text… (Ctrl+Enter to start)" aria-label="Text to send"></textarea>
+      </div>
+      <div id="tab-file" hidden>
+        <label class="dropzone" id="dropzone">
+          <input type="file" id="file-input">
+          <span id="file-label">Drop a file here, paste it, or <u>choose a file</u></span>
+          <span class="small">Up to 20 MB. Small files are fastest.</span>
+        </label>
+      </div>
+
+      <div class="settings">
+        <label>Speed
+          <select id="fps">
+            <option value="6">6 frames/s · older phones</option>
+            <option value="10">10 frames/s</option>
+            <option value="12" selected>12 frames/s</option>
+            <option value="15">15 frames/s</option>
+            <option value="20">20 frames/s · fast phones</option>
+          </select>
+        </label>
+        <label>QR density
+          <select id="density">
+            <option value="240">Low · easiest to scan</option>
+            <option value="480" selected>Medium</option>
+            <option value="760">High</option>
+            <option value="1100">Very high · needs a sharp camera</option>
+          </select>
+        </label>
+        <label>Error correction
+          <select id="ecl">
+            <option value="L" selected>Low (7%) · more data per code</option>
+            <option value="M">Medium (15%) · glare or a dirty screen</option>
+          </select>
+        </label>
+        <p class="estimate" id="estimate"></p>
+      </div>
+
+      <button type="button" id="start" class="primary wide">Start sending</button>
+      <p id="input-error" class="error" role="alert"></p>
+    </section>
+
+    <section class="panel stage" id="stage" aria-live="polite">
+      <div id="idle-view" class="stage">
+        <h2>Open the receiver on your phone</h2>
+        <canvas id="receiver-qr" class="qr receiver-qr" aria-label="QR code that opens the receiver page"></canvas>
+        <a id="receiver-link" class="link"></a>
+        <ol class="steps">
+          <li>Scan this code with the phone's camera app to open the receiver.</li>
+          <li>On the phone, tap <strong>Start camera</strong>.</li>
+          <li>Here, enter text or choose a file, then press <strong>Start sending</strong>.</li>
+          <li>Hold the phone so the code fills most of its view until it says it's done.</li>
+        </ol>
+      </div>
+      <div id="send-view" class="stage" hidden>
+        <canvas id="qr" class="qr" aria-label="Animated QR code with the data"></canvas>
+        <div class="stats" id="stats"></div>
+        <div class="controls">
+          <button type="button" id="pause">Pause</button>
+          <button type="button" id="fullscreen">Full screen</button>
+          <button type="button" id="stop">Stop</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="js/send.js"></script>
+</body>
+</html>

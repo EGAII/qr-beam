@@ -1,0 +1,10 @@
+{
+  "name": "qr-beam",
+  "private": true,
+  "type": "module",
+  "description": "Send a file or text from one screen to a phone camera with animated QR codes.",
+  "scripts": {
+    "test": "node test/run-tests.mjs",
+    "serve": "python -m http.server 8080"
+  }
+}

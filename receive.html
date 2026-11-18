@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QR Beam · Receive</title>
+  <meta name="description" content="Point your phone camera at a QR Beam code to receive a file or text.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%231f56d6'/%3E%3Cpath d='M5 5h5v5H5zM14 5h5v5h-5zM5 14h5v5H5zM14 14h2v2h-2zM17 17h2v2h-2zM14 17h2v2h-2zM17 14h2v2h-2z' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="var(--accent)"/><path d="M5 5h5v5H5zM14 5h5v5h-5zM5 14h5v5H5zM14 14h2v2h-2zM17 17h2v2h-2zM14 17h2v2h-2zM17 14h2v2h-2z" fill="#fff"/></svg>
+      QR Beam
+    </a>
+    <nav>
+      <a href="./">Send</a>
+      <a href="receive.html" aria-current="page">Receive</a>
+    </nav>
+  </header>
+
+  <main class="receive-layout">
+    <section class="panel" id="scan-panel">
+      <div class="video-wrap">
+        <video id="video" playsinline muted autoplay></video>
+        <div class="guide" aria-hidden="true"></div>
+        <div class="placeholder" id="placeholder">Camera is off</div>
+      </div>
+      <div class="progress" id="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="bar"></div></div>
+      <p class="status" id="status" aria-live="polite">Tap <strong>Start camera</strong>, then point it at the animated QR code on the sender page.</p>
+      <div class="controls">
+        <button type="button" id="start-cam" class="primary">Start camera</button>
+        <button type="button" id="stop-cam" hidden>Stop camera</button>
+        <select id="camera-select" aria-label="Camera" hidden></select>
+      </div>
+      <p class="engine" id="engine">Loading the QR scanner…</p>
+    </section>
+
+    <section class="panel" id="result" hidden aria-live="polite">
+      <h2 id="result-title">Received</h2>
+      <p class="result-meta" id="result-meta"></p>
+
+      <div id="text-result" hidden>
+        <textarea id="text-out" readonly aria-label="Received text"></textarea>
+        <div class="controls">
+          <button type="button" id="copy" class="primary">Copy text</button>
+          <a id="open-link" class="button" target="_blank" rel="noopener noreferrer" hidden>Open link</a>
+          <button type="button" id="share-text" hidden>Share</button>
+        </div>
+      </div>
+
+      <div id="file-result" hidden>
+        <img id="preview" class="preview" alt="Preview of the received image" hidden>
+        <div class="controls">
+          <a id="download" class="button primary">Download file</a>
+          <button type="button" id="share-file" hidden>Share / Save to…</button>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button type="button" id="again">Receive another</button>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="js/receive.js"></script>
+</body>
+</html>
